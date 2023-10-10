@@ -30,7 +30,7 @@ public class Maze
     }
 
     public MazeNode[,] nodes;
-    int mazeSizeX, mazeSizeY;
+    public int mazeSizeX, mazeSizeY;
 
     // Generation
     List<MazeNode> nodeStack = new List<MazeNode>();
