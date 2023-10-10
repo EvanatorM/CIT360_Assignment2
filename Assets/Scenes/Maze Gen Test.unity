@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4d2103f08eed244bf0ba6f0369c84d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeSizeX: 10
+  mazeSizeX: 20
   mazeSizeY: 10
   physicalMazeNodePrefab: {fileID: 1111660291997147873, guid: 32eace3c10e554349b4c5bf2ef585d58, type: 3}
   mazeNodeSize: 1
