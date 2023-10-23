@@ -9,13 +9,6 @@ public class PhysicalMazeNode : MonoBehaviour
     public void InitPhysicalMadeNode(Maze.MazeNode node, float scale)
     {
         transform.localScale = Vector3.one * scale;
-        /*
-        // Horizontal Walls
-        northWall.transform.localScale = new Vector3(1.1f, 0.1f / scale);
-        southWall.transform.localScale = new Vector3(1.1f, 0.1f / scale);
-        // Vertical Walls
-        eastWall.transform.localScale = new Vector3(0.1f / scale, 1.1f);
-        westWall.transform.localScale = new Vector3(0.1f / scale, 1.1f);*/
 
         // Set walls
         northWall.SetActive(node.northWall);

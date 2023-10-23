@@ -6,6 +6,7 @@ public class MazePrefabDisplay : MonoBehaviour
 {
     [Header("Maze Generation")]
     [SerializeField] int mazeSizeX, mazeSizeY;
+    [SerializeField, Range(0f, 1f)] float density;
 
     [Header("Maze Display")]
     [SerializeField] PhysicalMazeNode physicalMazeNodePrefab;
@@ -15,7 +16,7 @@ public class MazePrefabDisplay : MonoBehaviour
 
     void Start()
     {
-        maze = new Maze(mazeSizeX, mazeSizeY);
+        maze = new Maze(mazeSizeX, mazeSizeY, density);
 
         DisplayMazePrefabs();
     }

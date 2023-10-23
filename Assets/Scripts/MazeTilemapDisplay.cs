@@ -1,25 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class MazeTilemapDisplay : MonoBehaviour
 {
     [Header("Maze Generation")]
     [SerializeField] int mazeSizeX, mazeSizeY;
+    [SerializeField, Range(0f, 1f)] float density;
 
     [Header("Maze Display")]
     [SerializeField] Tilemap tilemap;
     [SerializeField] Tile blankTile, wallTile;
     [SerializeField] int mazeNodeSize;
 
+    [Header("Sliders")]
+    [SerializeField] Slider sizeXSlider;
+    [SerializeField] TMP_Text sizeXValue;
+    [SerializeField] Slider sizeYSlider;
+    [SerializeField] TMP_Text sizeYValue;
+    [SerializeField] Slider densitySlider;
+    [SerializeField] TMP_Text densityValue;
+    [SerializeField] Slider nodeSizeSlider;
+    [SerializeField] TMP_Text nodeSizeValue;
+
     Maze maze;
     MazeSolver ms;
 
     void Start()
     {
-        maze = new Maze(mazeSizeX, mazeSizeY);
+        maze = new Maze(mazeSizeX, mazeSizeY, density);
         ms = FindObjectOfType<MazeSolver>();
+
+        sizeXSlider.value = mazeSizeX;
+        sizeXValue.text = mazeSizeX.ToString();
+        sizeYSlider.value = mazeSizeY;
+        sizeYValue.text = mazeSizeY.ToString();
+        densitySlider.value = density;
+        densityValue.text = density.ToString("0.00");
+        nodeSizeSlider.value = mazeNodeSize;
+        nodeSizeValue.text = mazeNodeSize.ToString();
 
         DisplayMazeTilemaps();
     }
@@ -40,8 +62,8 @@ public class MazeTilemapDisplay : MonoBehaviour
 
         float mazeWorldSizeX = mazeSizeX * (mazeNodeSize + 1) + 1;
         float mazeWorldSizeY = mazeSizeY * (mazeNodeSize + 1) + 1;
-        Camera.main.transform.position = new Vector3(mazeWorldSizeX / 2.0f, mazeWorldSizeY / 2.0f, -10);
-        Camera.main.orthographicSize = mazeWorldSizeY * .5f + 1;
+        Camera.main.transform.position = new Vector3(mazeWorldSizeX / 2.0f, mazeWorldSizeY / 2.0f - 2f, -10);
+        Camera.main.orthographicSize = mazeWorldSizeY * .5f + 3;
 
         // Solve maze
         ms.SolveMaze(intArray);
@@ -99,5 +121,38 @@ public class MazeTilemapDisplay : MonoBehaviour
         }
 
         return maze;
+    }
+
+    public void GenerateNewMaze()
+    {
+        tilemap.ClearAllTiles();
+
+        maze = new Maze(mazeSizeX, mazeSizeY, density);
+
+        DisplayMazeTilemaps();
+    }
+
+    public void SizeXSliderUpdated(float value)
+    {
+        mazeSizeX = (int)value;
+        sizeXValue.text = mazeSizeX.ToString();
+    }
+
+    public void SizeYSliderUpdated(float value)
+    {
+        mazeSizeY = (int)value;
+        sizeYValue.text = mazeSizeY.ToString();
+    }
+
+    public void DensitySliderUpdated(float value)
+    {
+        density = value;
+        densityValue.text = density.ToString("0.00");
+    }
+
+    public void NodeSizeSliderUpdated(float value)
+    {
+        mazeNodeSize = (int)value;
+        nodeSizeValue.text = mazeNodeSize.ToString();
     }
 }

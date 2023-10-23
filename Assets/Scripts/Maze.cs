@@ -31,11 +31,12 @@ public class Maze
 
     public MazeNode[,] nodes;
     public int mazeSizeX, mazeSizeY;
+    public float density;
 
     // Generation
     List<MazeNode> nodeStack = new List<MazeNode>();
 
-    public Maze(int mazeSizeX, int mazeSizeY)
+    public Maze(int mazeSizeX, int mazeSizeY, float density)
     {
         nodes = new MazeNode[mazeSizeX, mazeSizeY];
         for (int x = 0; x < mazeSizeX; x++)
@@ -48,6 +49,7 @@ public class Maze
 
         this.mazeSizeX = mazeSizeX;
         this.mazeSizeY = mazeSizeY;
+        this.density = density;
 
         GenerateMaze();
     }
@@ -109,6 +111,16 @@ public class Maze
                     nodeStack[nodeStack.Count - 1].eastWall = false;
                     break;
             }
+
+            // Remove walls based on density
+            if (nodeStack[nodeStack.Count - 1].posY < mazeSizeY - 1 && Random.value < (1f - density))
+                nodeStack[nodeStack.Count - 1].northWall = false;
+            if (nodeStack[nodeStack.Count - 1].posX < mazeSizeX - 1 && Random.value < (1f - density))
+                nodeStack[nodeStack.Count - 1].eastWall = false;
+            if (nodeStack[nodeStack.Count - 1].posY > 0 && Random.value < (1f - density))
+                nodeStack[nodeStack.Count - 1].southWall = false;
+            if (nodeStack[nodeStack.Count - 1].posX > 0 && Random.value < (1f - density))
+                nodeStack[nodeStack.Count - 1].westWall = false;
 
             // Set next node to unavailable
             nodeStack[nodeStack.Count - 1].available = false;
